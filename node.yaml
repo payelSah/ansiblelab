@@ -9,7 +9,7 @@
      become: true
      apt_repository:
                  repo: 'deb https://deb.nodesource.com/node_0.10 {{ ansible_distribution_release }} main'
-                 update_cache: yes
+                 update_cache: no
    - name: install nodejs
      become: true
      apt: name=nodejs
