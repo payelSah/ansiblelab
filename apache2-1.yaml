@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+   - name: add apt key for nodesource
+     become: true
+     apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+     
+   - name: add repo for nodesource
+     become: true
+     apt_repository:
+                repo: 'deb https://deb.nodesource.com/node_0.10 {{ ansible_distribution_release }} main'
+                update_cache: no
+   
+   - name: install apache2
+     apt: name=apache2 update_cache=yes state=latest
+     
+   - name: enabled mod_rewrite
+     apache2_module: name=rewrite state=present
+     notify:
+      - restart apache2
+   
+  handlers:
+  - name: restart apache2
+    service: name=apache2 state=restarted
