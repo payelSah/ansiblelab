@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create a file using file module
+    command: touch foo.txt
